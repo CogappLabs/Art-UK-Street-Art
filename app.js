@@ -181,10 +181,12 @@ function updateResultsList() {
     const button = item.querySelector(".result-item__btn");
 
     if (foundLocations.has(locationId)) {
+      button.classList.add("is-found");
       button.style.backgroundColor = "#27ae60";
       button.style.color = "white";
       button.style.borderColor = "#27ae60";
     } else {
+      button.classList.remove("is-found");
       button.style.backgroundColor = "";
       button.style.color = "";
       button.style.borderColor = "";
@@ -483,18 +485,32 @@ function displayResults(locations, showDistances = true) {
     resultItem.dataset.locationId = locationId;
 
     resultItem.innerHTML = `
-      <button class="result-item__btn ${isFound ? "is-found" : ""}">
-        ${
-          showDistances
-            ? `<div class="distance">${location.distance.toFixed(
-                1
-              )} miles away</div>`
-            : ""
-        }
-        <h4>${locationSrc.artwork_title}</h4>
-        <div class="artist">Artist: ${locationSrc.display_fields}</div>
-        <div class="medium">${locationSrc.medium}</div>
-        <div class="year">${locationSrc.execution_date}</div>
+      <button class="result-item__btn ${isFound ? "is-found" : ""}" ${isFound && locationSrc.art_uk_image_url ? `data-image-url="${locationSrc.art_uk_image_url}"` : ''}>
+        <div class="artwork-image">
+          ${isFound && locationSrc.art_uk_image_url 
+            ? `<img src="${locationSrc.art_uk_image_url}" alt="${locationSrc.artwork_title}" />` 
+            : '<div class="placeholder-image"><span class="question-mark">?</span></div>'
+          }
+        </div>
+        <div class="artwork-info">
+          ${
+            showDistances
+              ? `<div class="distance">${location.distance.toFixed(
+                  1
+                )} miles away</div>`
+              : ""
+          }
+          ${isFound ? `
+            <h4>${locationSrc.artwork_title}</h4>
+            <div class="artist">Artist: ${locationSrc.display_fields}</div>
+            <div class="medium">${locationSrc.medium}</div>
+            <div class="year">${locationSrc.execution_date}</div>
+            <div class="found-badge">✓ Found!</div>
+          ` : `
+            <div class="artwork-id">ID: ${locationSrc.artwork_id}</div>
+            <div class="mystery-text">Find this artwork to unlock details!</div>
+          `}
+        </div>
       </button>
     `;
 

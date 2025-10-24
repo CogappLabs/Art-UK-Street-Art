@@ -177,9 +177,13 @@ body {
   transition: transform 0.2s;
   width: 100%;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
 }
 
-///// IS FOUND BUTTON
+/* Found button styling */
 .result-item__btn.is-found {
   background-color: #27ae60 !important;
   color: white !important;
@@ -194,6 +198,80 @@ body {
 .result-item__btn.is-found .medium,
 .result-item__btn.is-found .year {
   color: rgba(255, 255, 255, 0.9);
+}
+
+.result-item__btn.is-found .distance {
+  color: white !important;
+}
+
+/* Artwork image styling */
+.artwork-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 6px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.artwork-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Placeholder image for unfound items */
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  background-color: #95a5a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.question-mark {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+}
+
+/* Artwork info container */
+.artwork-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+/* Found badge */
+.found-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  align-self: center;
+  margin-top: 4px;
+}
+
+/* Unfound item styling */
+.artwork-id {
+  font-size: 14px;
+  font-weight: bold;
+  color: #7f8c8d;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.mystery-text {
+  font-size: 12px;
+  color: #95a5a6;
+  font-style: italic;
+  margin-top: 8px;
 }
 
 .result-item__btn:hover,
