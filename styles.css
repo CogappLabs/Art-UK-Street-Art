@@ -1,11 +1,27 @@
+/* Font face declarations */
+@font-face {
+  font-family: 'Pokemon GB';
+  src: url('./fonts/PokemonGb-RAeo.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pokemon Solid';
+  src: url('./fonts/pokemon/Pokemon Solid.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pokemon Hollow';
+  src: url('./fonts/pokemon/Pokemon Hollow.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Pokemon GB', Arial, sans-serif;
 }
 
 .header {
-  background-color: #2c3e50;
+  background-color: #47A058;
   color: white;
   padding: 20px;
   text-align: center;
@@ -14,6 +30,8 @@ body {
 .header h1 {
   margin: 0;
   font-size: 2em;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 2px;
 }
 
 #map {
@@ -28,6 +46,8 @@ body {
 .info-window h3 {
   margin: 0 0 10px 0;
   color: #2c3e50;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .info-window p {
@@ -50,6 +70,8 @@ body {
 .search-form h3 {
   margin: 0 0 15px 0;
   color: #2c3e50;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 1px;
 }
 
 .input-group {
@@ -77,6 +99,8 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 1px;
   transition: background-color 0.3s;
 }
 
@@ -140,6 +164,8 @@ body {
   margin: 0 0 20px 0;
   color: #2c3e50;
   text-align: center;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 1px;
 }
 
 .result-item__btn {
@@ -151,13 +177,17 @@ body {
   transition: transform 0.2s;
   width: 100%;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
 }
 
-/* Found button styles */
+/* Found button styling */
 .result-item__btn.is-found {
-  background-color: #27ae60 !important;
+  background-color: #47A058 !important;
   color: white !important;
-  border-color: #27ae60 !important;
+  border-color: #47A058 !important;
 }
 
 .result-item__btn.is-found h4 {
@@ -170,6 +200,101 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.result-item__btn.is-found .distance {
+  color: white !important;
+}
+
+/* Artwork image styling */
+.artwork-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 6px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.artwork-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Placeholder image for unfound items */
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  background-color: #95a5a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.question-mark {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+}
+
+/* Artwork info container */
+.artwork-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+/* Found badge */
+.found-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  align-self: center;
+  margin-top: 4px;
+}
+
+/* Unfound item styling */
+.artwork-id {
+  font-size: 14px;
+  font-weight: bold;
+  color: #7f8c8d;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.mystery-text {
+  font-size: 12px;
+  color: #95a5a6;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* Art UK link styling */
+.art-uk-link {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.art-uk-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+}
+
 .result-item__btn:hover,
 .result-item__btn:focus-visible {
   transform: translateY(-2px);
@@ -180,6 +305,8 @@ body {
   margin: 0 0 8px 0;
   color: #2c3e50;
   font-size: 18px;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .result-item .distance {
