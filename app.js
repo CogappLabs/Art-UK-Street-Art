@@ -483,11 +483,7 @@ function displayResults(locations, showDistances = true) {
     resultItem.dataset.locationId = locationId;
 
     resultItem.innerHTML = `
-      <button class="result-item__btn" style="
-        background-color: ${isFound ? "#27ae60" : ""};
-        color: ${isFound ? "white" : ""};
-        border-color: ${isFound ? "#27ae60" : ""};
-      ">
+      <button class="result-item__btn ${isFound ? "is-found" : ""}">
         ${
           showDistances
             ? `<div class="distance">${location.distance.toFixed(
@@ -499,11 +495,6 @@ function displayResults(locations, showDistances = true) {
         <div class="artist">Artist: ${locationSrc.display_fields}</div>
         <div class="medium">${locationSrc.medium}</div>
         <div class="year">${locationSrc.execution_date}</div>
-        ${
-          isFound
-            ? '<div style="color: #2ecc71; font-weight: bold; margin-top: 5px;">✓ Found!</div>'
-            : ""
-        }
       </button>
     `;
 
