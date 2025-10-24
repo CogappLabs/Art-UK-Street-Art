@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art UK Street Art Map</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Art UK Street Art Map</h1>
+      <p>Discover street art locations across the UK</p>
+    </div>
+
+    <div class="search-container">
+      <div class="search-form">
+        <h3>Find Street Art Near You</h3>
+        <div class="input-group">
+          <input
+            type="text"
+            id="locationInput"
+            placeholder="Enter your postcode (e.g., SW1A 1AA)"
+          />
+          <button id="searchButton">Find Nearest Art</button>
+        </div>
+        <p class="input-hint">
+          Or enter coordinates: lat,lng (e.g., 51.5074,-0.1278)
+        </p>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
+    <div id="results" class="results-container" style="display: none">
+      <h3>Nearest Street Art Locations</h3>
+      <ol class="results-list"></ol>
+    </div>
+
+    <!-- Google Maps API -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7LbqSRrrCZoI3bO3zJ6sxhSTqlQsHi5E&callback=initMap"
+    ></script>
+
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+  </body>
+</html>

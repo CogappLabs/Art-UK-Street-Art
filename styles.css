@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+#map {
+  height: 80vh;
+  width: 100%;
+}
+
+.info-window {
+  max-width: 200px;
+}
+
+.info-window h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+}
+
+.info-window p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.search-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.search-form {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-form h3 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#locationInput {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#searchButton {
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#searchButton:hover {
+  background-color: #2980b9;
+}
+
+.input-hint {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0 0;
+}
+
+.results-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+}
+
+.results-container h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.result-item {
+  margin-bottom: 10px;
+}
+
+.result-item__btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  width: 100%;
+  cursor: pointer;
+}
+
+.result-item__btn:hover,
+.result-item__btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.result-item h4 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.result-item .distance {
+  font-weight: bold;
+  color: #e74c3c;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.result-item .artist {
+  color: #7f8c8d;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.result-item .description {
+  color: #555;
+  line-height: 1.4;
+}
