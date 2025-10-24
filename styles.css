@@ -185,9 +185,9 @@ body {
 
 /* Found button styling */
 .result-item__btn.is-found {
-  background-color: #27ae60 !important;
+  background-color: #47A058 !important;
   color: white !important;
-  border-color: #27ae60 !important;
+  border-color: #47A058 !important;
 }
 
 .result-item__btn.is-found h4 {
@@ -272,6 +272,27 @@ body {
   color: #95a5a6;
   font-style: italic;
   margin-top: 8px;
+}
+
+/* Art UK link styling */
+.art-uk-link {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+  font-family: 'Pokemon GB', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.art-uk-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
 }
 
 .result-item__btn:hover,

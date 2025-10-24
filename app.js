@@ -506,6 +506,7 @@ function displayResults(locations, showDistances = true) {
             <div class="medium">${locationSrc.medium}</div>
             <div class="year">${locationSrc.execution_date}</div>
             <div class="found-badge">✓ Found!</div>
+            ${locationSrc.art_uk_link ? `<a href="${locationSrc.art_uk_link}" target="_blank" class="art-uk-link">Find me on Art UK</a>` : ''}
           ` : `
             <div class="artwork-id">ID: ${locationSrc.artwork_id}</div>
             <div class="mystery-text">Find this artwork to unlock details!</div>
