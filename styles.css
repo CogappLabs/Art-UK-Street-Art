@@ -179,6 +179,23 @@ body {
   cursor: pointer;
 }
 
+///// IS FOUND BUTTON
+.result-item__btn.is-found {
+  background-color: #27ae60 !important;
+  color: white !important;
+  border-color: #27ae60 !important;
+}
+
+.result-item__btn.is-found h4 {
+  color: white;
+}
+
+.result-item__btn.is-found .artist,
+.result-item__btn.is-found .medium,
+.result-item__btn.is-found .year {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .result-item__btn:hover,
 .result-item__btn:focus-visible {
   transform: translateY(-2px);
