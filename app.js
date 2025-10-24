@@ -110,6 +110,50 @@ function generateLocationId(location) {
   return locationSrc.artwork_id;
 }
 
+// Function to update the item-info content based on the clicked location
+function updateItemInfo(location, isFound) {
+  const itemInfo = document.querySelector(".item-info");
+  const locationSrc = location._source || location;
+
+  if (isFound) {
+    // User clicked button relating to FOUND location
+    itemInfo.innerHTML = `
+      <div>
+        <img src="${
+          locationSrc.art_uk_image_url_large ||
+          locationSrc.art_uk_image_url ||
+          ""
+        }" alt="${locationSrc.artwork_title}" />
+        <h3>${locationSrc.artwork_title}</h3>
+        <p>Location ID: ${locationSrc.artwork_id}</p>
+        <p>Artist: ${locationSrc.display_fields}</p>
+        <p>Medium: ${locationSrc.medium}</p>
+        <p>Year: ${locationSrc.execution_date}</p>
+      </div>
+    `;
+  } else {
+    // User clicked button relating to NOT FOUND location
+    itemInfo.innerHTML = `
+      <div>
+        <div style="font-size: 3rem; text-align: center; margin: 1rem 0;">?</div>
+        <p style="text-align: center; font-weight: bold;">Location ID: ${locationSrc.artwork_id}</p>
+        <p style="text-align: center; color: #666;">Find this artwork to fill in this info!</p>
+        <p style="text-align: center; color: #888; font-size: 0.9rem;">Click on the map marker and press "I've found this" to reveal the details.</p>
+      </div>
+    `;
+  }
+}
+
+// Function to show the default item-info content (no user interaction)
+function showDefaultItemInfo() {
+  const itemInfo = document.querySelector(".item-info");
+  itemInfo.innerHTML = `
+    <div>
+      <h3>Click on a work to see info here</h3>
+    </div>
+  `;
+}
+
 // Mark a location as found
 function markLocationAsFound(locationId) {
   foundLocations.add(locationId);
@@ -500,6 +544,9 @@ function displayResults(locations, showDistances = true) {
 
     // Add click handler to centre map on this location (only if found)
     resultItem.addEventListener("click", () => {
+      // Update the item-info content
+      updateItemInfo(location, isFound);
+
       if (isFound) {
         const position = {
           lat: locationSrc.address_lat,
@@ -524,6 +571,9 @@ function displayResults(locations, showDistances = true) {
 async function initMap() {
   // Load found locations from cookie first
   loadFoundLocationsFromCookie();
+
+  // Show default item-info content
+  showDefaultItemInfo();
 
   // Centre the map on the UK (London coordinates)
   const centre = { lat: 51.5074, lng: -0.1278 };

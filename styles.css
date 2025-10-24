@@ -153,7 +153,7 @@ body {
   cursor: pointer;
 }
 
-///// IS FOUND BUTTON
+/* Found button styles */
 .result-item__btn.is-found {
   background-color: #27ae60 !important;
   color: white !important;
@@ -201,10 +201,34 @@ body {
 }
 
 .item-info {
-  background-color: chartreuse;
+  background-color: #f8f9fa;
   grid-row: 1 / 2;
   grid-column: 1 / -1;
   min-height: 500px;
+  max-height: 800px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-info img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.item-info h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.item-info p {
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {
