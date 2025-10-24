@@ -2,6 +2,44 @@
 let map;
 let streetArtLocations = [];
 let userLocation = null;
+let foundLocations = new Set(); // Track which locations have been found
+
+// Cookie utility functions
+function setCookie(name, value, days = 30) {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+}
+
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+// Load found locations from cookie on page load
+function loadFoundLocationsFromCookie() {
+  const foundArtworkIds = getCookie("foundArtworkIds");
+  if (foundArtworkIds) {
+    const ids = foundArtworkIds.split(",");
+    ids.forEach((id) => {
+      if (id.trim()) {
+        foundLocations.add(id.trim());
+      }
+    });
+  }
+}
+
+// Save found locations to cookie
+function saveFoundLocationsToCookie() {
+  const artworkIds = Array.from(foundLocations);
+  setCookie("foundArtworkIds", artworkIds.join(","));
+}
 
 // Fallback data in case JSON fetch fails
 const fallbackLocations = [
@@ -63,6 +101,48 @@ async function fetchStreetArtLocations() {
     console.log("Using fallback data instead");
     return fallbackLocations;
   }
+}
+
+// Generate unique ID for a location (using just artwork_id for simplicity)
+function generateLocationId(location) {
+  const locationSrc = location._source || location;
+  return locationSrc.artwork_id;
+}
+
+// Mark a location as found
+function markLocationAsFound(locationId) {
+  foundLocations.add(locationId);
+  saveFoundLocationsToCookie(); // Save to cookie
+  updateResultsList();
+
+  // Close any open info windows
+  const infoWindows = document.querySelectorAll(".gm-style-iw");
+  infoWindows.forEach((window) => {
+    const closeButton = window.querySelector(".gm-ui-hover-effect");
+    if (closeButton) closeButton.click();
+  });
+}
+
+// Make function globally accessible
+window.markLocationAsFound = markLocationAsFound;
+
+// Update the results list to show found locations
+function updateResultsList() {
+  const resultItems = document.querySelectorAll(".result-item");
+  resultItems.forEach((item) => {
+    const locationId = item.dataset.locationId;
+    const button = item.querySelector(".result-item__btn");
+
+    if (foundLocations.has(locationId)) {
+      button.style.backgroundColor = "#27ae60";
+      button.style.color = "white";
+      button.style.borderColor = "#27ae60";
+    } else {
+      button.style.backgroundColor = "";
+      button.style.color = "";
+      button.style.borderColor = "";
+    }
+  });
 }
 
 // Alternative: Load JSON data directly (works without server)
@@ -348,27 +428,48 @@ function displayResults(locations) {
 
   locations.forEach((location, index) => {
     const locationSrc = location._source || location;
+    const locationId = generateLocationId(location);
+    const isFound = foundLocations.has(locationId);
+
     const resultItem = document.createElement("li");
     resultItem.className = "result-item";
+    resultItem.dataset.locationId = locationId;
+
     resultItem.innerHTML = `
-      <button class="result-item__btn">
+      <button class="result-item__btn" style="
+        background-color: ${isFound ? "#27ae60" : ""};
+        color: ${isFound ? "white" : ""};
+        border-color: ${isFound ? "#27ae60" : ""};
+      ">
         <div class="distance">${location.distance.toFixed(1)} miles away</div>
         <h4>${locationSrc.artwork_title}</h4>
         <div class="artist">Artist: ${locationSrc.display_fields}</div>
         <div class="medium">${locationSrc.medium}</div>
         <div class="year">${locationSrc.execution_date}</div>
+        ${
+          isFound
+            ? '<div style="color: #2ecc71; font-weight: bold; margin-top: 5px;">✓ Found!</div>'
+            : ""
+        }
       </button>
     `;
 
-    // Add click handler to centre map on this location
+    // Add click handler to centre map on this location (only if found)
     resultItem.addEventListener("click", () => {
-      const position = {
-        lat: locationSrc.address_lat,
-        lng: locationSrc.address_long,
-      };
-      map.setCenter(position);
-      map.setZoom(15);
-      mapElement.scrollIntoView();
+      if (isFound) {
+        const position = {
+          lat: locationSrc.address_lat,
+          lng: locationSrc.address_long,
+        };
+        map.setCenter(position);
+        map.setZoom(15);
+        mapElement.scrollIntoView();
+      } else {
+        // Show a message that they need to find it first
+        alert(
+          'You need to find this artwork first! Click on the map marker and press "I\'ve found this" to mark it as found.'
+        );
+      }
     });
 
     resultsList.appendChild(resultItem);
@@ -377,6 +478,9 @@ function displayResults(locations) {
 
 // Initialise the map when the page loads
 async function initMap() {
+  // Load found locations from cookie first
+  loadFoundLocationsFromCookie();
+
   // Centre the map on the UK (London coordinates)
   const centre = { lat: 51.5074, lng: -0.1278 };
 
@@ -457,6 +561,8 @@ async function initMap() {
           ${locations
             .map((loc, index) => {
               const locSrc = loc._source || loc;
+              const locationId = generateLocationId(loc);
+              const isFound = foundLocations.has(locationId);
               return `
               <div style="border-bottom: 1px solid #eee; padding: 10px 0; ${
                 index === 0 ? "border-top: 1px solid #eee;" : ""
@@ -474,6 +580,18 @@ async function initMap() {
                     ? `<a href="${locSrc.art_uk_link}" target="_blank">View on Art UK</a>`
                     : ""
                 }
+                <button onclick="markLocationAsFound('${locationId}')" style="
+                  background-color: ${isFound ? "#27ae60" : "#3498db"};
+                  color: white;
+                  border: none;
+                  padding: 8px 16px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  margin-top: 10px;
+                  font-size: 14px;
+                ">
+                  ${isFound ? "✓ Found!" : "I've found this"}
+                </button>
               </div>
             `;
             })
@@ -482,6 +600,8 @@ async function initMap() {
       `;
     } else {
       const singleLocationSrc = firstLocation._source || firstLocation;
+      const locationId = generateLocationId(firstLocation);
+      const isFound = foundLocations.has(locationId);
       infoWindowContent = `
         <div class="info-window">
           <h3>${singleLocationSrc.artwork_title}</h3>
@@ -497,6 +617,18 @@ async function initMap() {
               ? `<a href="${singleLocationSrc.art_uk_link}" target="_blank">View on Art UK website</a>`
               : ""
           }
+          <button onclick="markLocationAsFound('${locationId}')" style="
+            background-color: ${isFound ? "#27ae60" : "#3498db"};
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+          ">
+            ${isFound ? "✓ Found!" : "I've found this"}
+          </button>
         </div>
       `;
     }
