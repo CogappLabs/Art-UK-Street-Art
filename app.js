@@ -408,8 +408,8 @@ function findNearestArt(userCoords) {
     })
     .sort((a, b) => a.distance - b.distance);
 
-  // Display results
-  displayResults(locationsWithDistance);
+  // Display results with distances
+  displayResults(locationsWithDistance, true);
 
   // Calculate bounds to show all pins including user location
   const bounds = new google.maps.LatLngBounds();
@@ -465,7 +465,7 @@ function findNearestArt(userCoords) {
 }
 
 // Display search results
-function displayResults(locations) {
+function displayResults(locations, showDistances = true) {
   const resultsContainer = document.getElementById("results");
   const resultsList = document.querySelector(".results-list");
   const mapElement = document.getElementById("map");
@@ -488,7 +488,13 @@ function displayResults(locations) {
         color: ${isFound ? "white" : ""};
         border-color: ${isFound ? "#27ae60" : ""};
       ">
-        <div class="distance">${location.distance.toFixed(1)} miles away</div>
+        ${
+          showDistances
+            ? `<div class="distance">${location.distance.toFixed(
+                1
+              )} miles away</div>`
+            : ""
+        }
         <h4>${locationSrc.artwork_title}</h4>
         <div class="artist">Artist: ${locationSrc.display_fields}</div>
         <div class="medium">${locationSrc.medium}</div>
@@ -727,6 +733,21 @@ async function initMap() {
   setupSearchFunctionality();
 }
 
+// Show all locations without distances
+function showAllLocations() {
+  const allLocations = streetArtLocations
+    .filter((location) => {
+      const locationSrc = location._source || location;
+      return locationSrc.address_lat && locationSrc.address_long;
+    })
+    .map((location) => ({
+      ...location,
+      distance: 0, // Dummy distance, won't be shown
+    }));
+
+  displayResults(allLocations, false); // false = don't show distances
+}
+
 // Setup search form functionality
 function setupSearchFunctionality() {
   const searchButton = document.getElementById("searchButton");
@@ -738,6 +759,9 @@ function setupSearchFunctionality() {
       handleSearch();
     }
   });
+
+  // Show all locations initially
+  showAllLocations();
 }
 
 // Handle search form submission
