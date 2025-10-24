@@ -93,7 +93,7 @@ body {
 
 #searchButton {
   padding: 12px 24px;
-  background-color: #3498db;
+  background-color: #b3181c;
   color: white;
   border: none;
   border-radius: 4px;
@@ -101,11 +101,12 @@ body {
   font-size: 16px;
   font-family: 'Pokemon GB', Arial, sans-serif;
   letter-spacing: 1px;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
 }
 
 #searchButton:hover {
-  background-color: #2980b9;
+  background-color: #f0b088;
+  color: black;
 }
 
 .input-hint {

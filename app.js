@@ -224,17 +224,44 @@ function updateResultsList() {
   resultItems.forEach((item) => {
     const locationId = item.dataset.locationId;
     const button = item.querySelector(".result-item__btn");
+    const isFound = foundLocations.has(locationId);
 
-    if (foundLocations.has(locationId)) {
+    // Update the class and let CSS handle most visual changes
+    if (isFound) {
       button.classList.add("is-found");
-      button.style.backgroundColor = "#27ae60";
-      button.style.color = "white";
-      button.style.borderColor = "#27ae60";
+      
+      // Only update the specific content that needs to change
+      const artworkImage = button.querySelector(".artwork-image");
+      const artworkInfo = button.querySelector(".artwork-info");
+      
+      // Find location data to get image and details
+      const location = streetArtLocations.find(loc => {
+        const locationSrc = loc._source || loc;
+        return locationSrc.artwork_id === locationId;
+      });
+      
+      if (location) {
+        const locationSrc = location._source || location;
+        
+        // Update image from placeholder to real image
+        if (locationSrc.art_uk_image_url) {
+          artworkImage.innerHTML = `<img src="${locationSrc.art_uk_image_url}" alt="${locationSrc.artwork_title}" />`;
+        }
+        
+        // Update content from mystery text to real details
+        const hasDistance = location.distance !== undefined;
+        artworkInfo.innerHTML = `
+          ${hasDistance ? `<div class="distance">${location.distance.toFixed(1)} miles away</div>` : ""}
+          <h4>${locationSrc.artwork_title}</h4>
+          <div class="artist">Artist: ${locationSrc.display_fields}</div>
+          <div class="medium">${locationSrc.medium}</div>
+          <div class="year">${locationSrc.execution_date}</div>
+          <div class="found-badge">✓ Found!</div>
+          ${locationSrc.art_uk_link ? `<a href="${locationSrc.art_uk_link}" target="_blank" class="art-uk-link">Find me on Art UK</a>` : ''}
+        `;
+      }
     } else {
       button.classList.remove("is-found");
-      button.style.backgroundColor = "";
-      button.style.color = "";
-      button.style.borderColor = "";
     }
   });
 }
@@ -562,10 +589,13 @@ function displayResults(locations, showDistances = true) {
 
     // Add click handler to centre map on this location (only if found)
     resultItem.addEventListener("click", () => {
+      // Check current found status (not the captured one)
+      const currentlyFound = foundLocations.has(locationId);
+      
       // Update the item-info content
-      updateItemInfo(location, isFound);
+      updateItemInfo(location, currentlyFound);
 
-      if (isFound) {
+      if (currentlyFound) {
         const position = {
           lat: locationSrc.address_lat,
           lng: locationSrc.address_long,
