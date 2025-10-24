@@ -3,6 +3,7 @@ let map;
 let streetArtLocations = [];
 let userLocation = null;
 let foundLocations = new Set(); // Track which locations have been found
+let markerReferences = new Map(); // Store marker references for updates
 
 // Cookie utility functions
 function setCookie(name, value, days = 30) {
@@ -114,12 +115,58 @@ function markLocationAsFound(locationId) {
   foundLocations.add(locationId);
   saveFoundLocationsToCookie(); // Save to cookie
   updateResultsList();
+  updateMarkerColors(); // Update marker colors
 
   // Close any open info windows
   const infoWindows = document.querySelectorAll(".gm-style-iw");
   infoWindows.forEach((window) => {
     const closeButton = window.querySelector(".gm-ui-hover-effect");
     if (closeButton) closeButton.click();
+  });
+}
+
+// Update marker colors based on found status
+function updateMarkerColors() {
+  // Update each marker's icon based on current found status
+  markerReferences.forEach((markerData, coordKey) => {
+    const { marker, locations } = markerData;
+
+    // Check if any of the locations at this coordinate have been found
+    const hasFoundLocation = locations.some((location) => {
+      const locationId = generateLocationId(location);
+      return foundLocations.has(locationId);
+    });
+
+    // Determine marker colors based on found status
+    const markerColor = hasFoundLocation ? "#27ae60" : "#e74c3c";
+    const strokeColor = hasFoundLocation ? "#229954" : "#c0392b";
+    const textColor = hasFoundLocation ? "#27ae60" : "#e74c3c";
+    const isMultiple = locations.length > 1;
+
+    // Update the marker icon
+    marker.setIcon({
+      url:
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" fill="${markerColor}" stroke="${strokeColor}" stroke-width="2"/>
+          <circle cx="20" cy="20" r="8" fill="white"/>
+          <text x="20" y="25" text-anchor="middle" font-family="Arial" font-size="12" fill="${textColor}">🎨</text>
+          ${
+            isMultiple
+              ? `<text x="20" y="10" text-anchor="middle" font-family="Arial" font-size="10" fill="white" font-weight="bold">${locations.length}</text>`
+              : ""
+          }
+          ${
+            hasFoundLocation
+              ? '<text x="20" y="35" text-anchor="middle" font-family="Arial" font-size="8" fill="white" font-weight="bold">✓</text>'
+              : ""
+          }
+        </svg>
+      `),
+      scaledSize: new google.maps.Size(40, 40),
+      anchor: new google.maps.Point(20, 20),
+    });
   });
 }
 
@@ -523,6 +570,17 @@ async function initMap() {
     const locationSrc = firstLocation._source || firstLocation;
     const isMultiple = locations.length > 1;
 
+    // Check if any of the locations at this coordinate have been found
+    const hasFoundLocation = locations.some((location) => {
+      const locationId = generateLocationId(location);
+      return foundLocations.has(locationId);
+    });
+
+    // Determine marker colors based on found status
+    const markerColor = hasFoundLocation ? "#27ae60" : "#e74c3c";
+    const strokeColor = hasFoundLocation ? "#229954" : "#c0392b";
+    const textColor = hasFoundLocation ? "#27ae60" : "#e74c3c";
+
     const marker = new google.maps.Marker({
       position: {
         lat: locationSrc.address_lat,
@@ -537,12 +595,17 @@ async function initMap() {
           "data:image/svg+xml;charset=UTF-8," +
           encodeURIComponent(`
           <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="20" cy="20" r="18" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+            <circle cx="20" cy="20" r="18" fill="${markerColor}" stroke="${strokeColor}" stroke-width="2"/>
             <circle cx="20" cy="20" r="8" fill="white"/>
-            <text x="20" y="25" text-anchor="middle" font-family="Arial" font-size="12" fill="#e74c3c">🎨</text>
+            <text x="20" y="25" text-anchor="middle" font-family="Arial" font-size="12" fill="${textColor}">🎨</text>
             ${
               isMultiple
                 ? `<text x="20" y="10" text-anchor="middle" font-family="Arial" font-size="10" fill="white" font-weight="bold">${locations.length}</text>`
+                : ""
+            }
+            ${
+              hasFoundLocation
+                ? '<text x="20" y="35" text-anchor="middle" font-family="Arial" font-size="8" fill="white" font-weight="bold">✓</text>'
                 : ""
             }
           </svg>
@@ -641,6 +704,10 @@ async function initMap() {
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
     });
+
+    // Store marker reference for later updates
+    const coordKey = `${locationSrc.address_lat},${locationSrc.address_long}`;
+    markerReferences.set(coordKey, { marker, locations });
   });
 
   // Add a custom control for the map
