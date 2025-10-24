@@ -90,27 +90,51 @@ body {
   margin: 5px 0 0 0;
 }
 
+.pokedex {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
 .results-container {
   background-color: #f8f9fa;
   padding: 20px;
   border-top: 1px solid #dee2e6;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+}
+
+@media (min-width: 768px) {
+  .results-container {
+    grid-column: 1 / 5;
+    grid-row: 1 / -1;
+  }
 }
 
 .results-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
   list-style-type: none;
   padding: 0;
+}
+
+@media (min-width: 768px) {
+  .results-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .results-list {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .results-container h3 {
   margin: 0 0 20px 0;
   color: #2c3e50;
   text-align: center;
-}
-
-.result-item {
-  margin-bottom: 10px;
 }
 
 .result-item__btn {
@@ -152,4 +176,17 @@ body {
 .result-item .description {
   color: #555;
   line-height: 1.4;
+}
+
+.item-info {
+  background-color: chartreuse;
+  grid-row: 1 / 2;
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .item-info {
+    grid-column: 5 / 7;
+    grid-row: 1 / -1;
+  }
 }
