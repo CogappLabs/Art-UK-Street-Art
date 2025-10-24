@@ -1,0 +1,144 @@
+{
+  "locations": [
+    {
+      "_index": "art_uk_street_art_locations",
+      "_id": "635162",
+      "_score": 1,
+      "_source": {
+        "artwork_id": "635162",
+        "artwork_title": "Abstract Face in Red Surround",
+        "additional_title_info": null,
+        "collection_accession_number": "CF23_MRF_S1212",
+        "pcf_number": "CF23_MRF_S1212",
+        "acquisition_method": "created for the artist-led community project Whispering Walls",
+        "execution_date": "2022",
+        "medium": "paint",
+        "type": "Painted",
+        "inscription": null,
+        "inscription_signature": null,
+        "display_fields": "Pawson, Alex, b.1988 | CF23_MRF_S1212",
+        "tags": "Street Art",
+        "address_lat": 51.501086,
+        "address_long": -3.1752437,
+        "location_point": {
+          "lat": 51.501086,
+          "lon": -3.1752437
+        },
+        "art_uk_image": "https://d3d00swyhr67nd.cloudfront.net/w250/collection/PUBSCULPT/CF23/CF23_MRF_S1212-001.jpg",
+        "art_uk_label": "View artwork",
+        "art_uk_api_url": "https://artuk.org/api/venues/object/coordinates/51d5010860c-3d1752437",
+        "art_uk_api_title": "Abstract Face in Red Surround",
+        "art_uk_link": "https://artuk.org/discover/artworks/abstract-face-in-red-surround-635162",
+        "art_uk_image_url": "https://d3d00swyhr67nd.cloudfront.net/w250/collection/PUBSCULPT/CF23/CF23_MRF_S1212-001.jpg"
+      }
+    },
+    {
+      "_index": "art_uk_street_art_locations",
+      "_id": "635148",
+      "_score": 1,
+      "_source": {
+        "artwork_id": "635148",
+        "artwork_title": "Abstract Faces",
+        "additional_title_info": null,
+        "collection_accession_number": "BS3_PF_S1251",
+        "pcf_number": "BS3_PF_S1251",
+        "acquisition_method": null,
+        "execution_date": "2024",
+        "medium": "paint",
+        "type": "Painted",
+        "inscription": null,
+        "inscription_signature": null,
+        "display_fields": "Squirl, active since early 2010s | BS3_PF_S1251",
+        "tags": "Abstract, Pictorial, Street Art",
+        "address_lat": 51.43593,
+        "address_long": -2.5950667,
+        "location_point": {
+          "lat": 51.43593,
+          "lon": -2.5950667
+        },
+        "art_uk_image_url": "https://d3d00swyhr67nd.cloudfront.net/w250/collection/PUBSCULPT/BS3/BS3_PF_S1251-015.jpg",
+        "art_uk_label": "View artwork",
+        "art_uk_api_url": "https://artuk.org/api/venues/object/coordinates/51d435930c-2d5950667",
+        "art_uk_link": "https://artuk.org/discover/artworks/abstract-faces-635148"
+      }
+    },
+    {
+      "_index": "art_uk_street_art_locations",
+      "_id": "345278",
+      "_score": 1,
+      "_source": {
+        "artwork_id": "345278",
+        "artwork_title": "Glasgow University / Yardworks Open Air Gallery",
+        "additional_title_info": null,
+        "collection_accession_number": "G12_GB_S1041",
+        "pcf_number": "G12_GB_S1041",
+        "acquisition_method": "commissioned by the Yardworks Centre",
+        "execution_date": "2023–2024",
+        "medium": "paint",
+        "type": "Painted",
+        "inscription": null,
+        "inscription_signature": null,
+        "display_fields": "Yardworks | G12_GB_S1041",
+        "tags": "Composite, Street Art",
+        "address_lat": 55.872526,
+        "address_long": -4.2963336,
+        "location_point": {
+          "lat": 55.872526,
+          "lon": -4.2963336
+        }
+      }
+    },
+    {
+      "_index": "art_uk_street_art_locations",
+      "_id": "463485",
+      "_score": 1,
+      "_source": {
+        "artwork_id": "463485",
+        "artwork_title": "Gradient",
+        "additional_title_info": null,
+        "collection_accession_number": "G12_GB_S8052",
+        "pcf_number": "G12_GB_S8052",
+        "acquisition_method": "created for Yardworks Festival, 2022",
+        "execution_date": "2022",
+        "medium": "paint",
+        "type": "Painted",
+        "inscription": null,
+        "inscription_signature": null,
+        "display_fields": "Box Vincent, active since 2010 | Yardworks | G12_GB_S8052",
+        "tags": "Pictorial, Street Art",
+        "address_lat": 55.872526,
+        "address_long": -4.2963336,
+        "location_point": {
+          "lat": 55.872526,
+          "lon": -4.2963336
+        }
+      }
+    },
+    {
+      "_index": "art_uk_street_art_locations",
+      "_id": "416464",
+      "_score": 1,
+      "_source": {
+        "artwork_id": "416464",
+        "artwork_title": "DBA Crew",
+        "additional_title_info": null,
+        "collection_accession_number": "G3_GB_S8115",
+        "pcf_number": "G3_GB_S8115",
+        "acquisition_method": "commissioned by Network Rail through Yardworks",
+        "execution_date": "2023",
+        "medium": "paint",
+        "type": "Painted",
+        "inscription": null,
+        "inscription_signature": null,
+        "display_fields": "Don't Be Alarmed, active since 2020 | Yardworks | G3_GB_S8115",
+        "tags": "Pictorial, Street Art",
+        "address_lat": 55.863353,
+        "address_long": -4.2972066,
+        "location_point": {
+          "lat": 55.863353,
+          "lon": -4.2972066
+        }
+      }
+    }
+  ]
+}
