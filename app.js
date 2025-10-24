@@ -129,15 +129,16 @@ function updateItemInfo(location, isFound) {
         <p>Artist: ${locationSrc.display_fields}</p>
         <p>Medium: ${locationSrc.medium}</p>
         <p>Year: ${locationSrc.execution_date}</p>
+        <a href="${locationSrc.art_uk_link}">View on Art UK website</a>
       </div>
     `;
   } else {
     // User clicked button relating to NOT FOUND location
     itemInfo.innerHTML = `
       <div>
-        <div style="font-size: 3rem; text-align: center; margin: 1rem 0;">?</div>
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 300px; background-color: #576f84;"><p style="font-size: 3rem; color: #dee2e6; margin: 0;">?</p></div>
         <p style="text-align: center; font-weight: bold;">Location ID: ${locationSrc.artwork_id}</p>
-        <p style="text-align: center; color: #666;">Find this artwork to fill in this info!</p>
+        <p style="text-align: center; color: indianred; font-weight: bold; font-style: italic;"<>Find this artwork to fill in this info!</p>
         <p style="text-align: center; color: #888; font-size: 0.9rem;">Click on the map marker and press "I've found this" to reveal the details.</p>
       </div>
     `;
@@ -554,12 +555,6 @@ function displayResults(locations, showDistances = true) {
         };
         map.setCenter(position);
         map.setZoom(15);
-        mapElement.scrollIntoView();
-      } else {
-        // Show a message that they need to find it first
-        alert(
-          'You need to find this artwork first! Click on the map marker and press "I\'ve found this" to mark it as found.'
-        );
       }
     });
 
